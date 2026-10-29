@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Out Puzzle - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1rem;
+            min-height: 450px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .score-board {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 90px);
+            grid-template-rows: repeat(3, 90px);
+            gap: 8px;
+            background: var(--bg-primary);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem auto;
+        }
+        .puzzle-tile {
+            background: linear-gradient(135deg, #f59e0b, #b45309);
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .puzzle-tile:hover {
+            transform: scale(0.95);
+        }
+        .puzzle-tile.target-car {
+            background: linear-gradient(135deg, #ef4444, #991b1b);
+        }
+        .instruction {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <i data-lucide="gamepad-2" class="brand-icon"></i>
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <i data-lucide="user" class="profile-icon"></i>
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Back to Hub</a>
+            <div class="score-board">Moves: <span id="moves">0</span> | Level: <span id="level">1</span></div>
+            
+            <div class="puzzle-grid">
+                <div class="puzzle-tile target-car">🚗</div>
+                <div class="puzzle-tile">🚙</div>
+                <div class="puzzle-tile">🚕</div>
+                <div class="puzzle-tile">🚚</div>
+                <div class="puzzle-tile" style="background:transparent; border:1px dashed var(--border-color); cursor:default;"></div>
+                <div class="puzzle-tile">🚙</div>
+                <div class="puzzle-tile">🚕</div>
+                <div class="puzzle-tile">🚚</div>
+                <div class="puzzle-tile">🚗</div>
+            </div>
+            
+            <p class="instruction">Slide and clear the traffic grid to escape!</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Play Zone. Managed by Siraj Sar.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        let moves = 0;
+        document.querySelectorAll('.puzzle-tile:not([style*="transparent"])').forEach(tile => {
+            tile.addEventListener('click', () => {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+            });
+        });
+    </script>
+</body>
+</html>
