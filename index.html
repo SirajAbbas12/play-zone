@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Zone - Professional Arcade Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <i data-lucide="gamepad-2" class="brand-icon"></i>
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="search-bar">
+            <i data-lucide="search" class="search-icon"></i>
+            <input type="text" placeholder="Search 5+ arcade games..." id="gameSearch">
+        </div>
+        <div class="user-profile">
+            <i data-lucide="user" class="profile-icon"></i>
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h1>Ultimate Web Arcade Experience</h1>
+                <p>High-performance, lag-free casual mini-games built for true enthusiasts.</p>
+                <button class="cta-btn cursor-pointer">
+                    <i data-lucide="play"></i> Play Featured Game
+                </button>
+            </div>
+        </section>
+
+        <section class="games-section">
+            <h2>Featured Arcade Games</h2>
+            <div class="games-grid" id="gamesGrid">
+                <div class="game-card cursor-pointer">
+                    <div class="game-thumbnail bg-1">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3>Bottle Flip Master</h3>
+                    <p>Physics-based precision challenge.</p>
+                    <button class="play-now-btn cursor-pointer">Play Now</button>
+                </div>
+                <div class="game-card cursor-pointer">
+                    <div class="game-thumbnail bg-2">
+                        <i data-lucide="scissors"></i>
+                    </div>
+                    <h3>Watermelon Slice</h3>
+                    <p>Fast-paced arcade slicing action.</p>
+                    <button class="play-now-btn cursor-pointer">Play Now</button>
+                </div>
+                <div class="game-card cursor-pointer">
+                    <div class="game-thumbnail bg-3">
+                        <i data-lucide="puzzle"></i>
+                    </div>
+                    <h3>Car Out Puzzle</h3>
+                    <p>Brain teaser parking grid puzzle.</p>
+                    <button class="play-now-btn cursor-pointer">Play Now</button>
+                </div>
+                <div class="game-card cursor-pointer">
+                    <div class="game-thumbnail bg-4">
+                        <i data-lucide="layers"></i>
+                    </div>
+                    <h3>Memory Match</h3>
+                    <p>Test and sharpen your memory skills.</p>
+                    <button class="play-now-btn cursor-pointer">Play Now</button>
+                </div>
+                <div class="game-card cursor-pointer">
+                    <div class="game-thumbnail bg-5">
+                        <i data-lucide="activity"></i>
+                    </div>
+                    <h3>Color Rush Reflex</h3>
+                    <p>Lightning-fast tapping reflex test.</p>
+                    <button class="play-now-btn cursor-pointer">Play Now</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="ad-container">
+            <span>[ Google AdSense Banner Space ]</span>
+        </div>
+        <p>&copy; 2026 Play Zone. Managed by Siraj Sar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
