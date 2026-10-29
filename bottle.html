@@ -12,61 +12,72 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
             margin-top: 1rem;
-            min-height: 450px;
+            min-height: 480px;
             position: relative;
-            overflow: hidden;
+            text-align: center;
         }
-        .score-board {
-            font-size: 1.25rem;
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        .stats-bar span {
+            color: var(--accent);
         }
         .bottle-stage {
-            width: 100px;
-            height: 250px;
-            border-bottom: 4px solid var(--accent-color);
+            width: 140px;
+            height: 260px;
             display: flex;
             align-items: flex-end;
             justify-content: center;
+            margin: 1.5rem auto;
             position: relative;
-            margin-bottom: 2rem;
         }
         .bottle {
-            width: 40px;
-            height: 110px;
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-            border-radius: 10px 10px 6px 6px;
-            position: absolute;
-            bottom: 0;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            width: 48px;
+            height: 150px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            border-radius: 12px 12px 20px 20px;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
-        .bottle-cap {
+        .bottle::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 14px;
             width: 20px;
-            height: 15px;
-            background: #f8fafc;
+            height: 16px;
+            background: #0ea5e9;
             border-radius: 4px 4px 0 0;
         }
-        .flip-btn {
-            background-color: var(--accent-color);
-            color: var(--bg-primary);
+        .btn-action {
+            background: var(--accent-gradient);
+            color: white;
             border: none;
-            padding: 0.75rem 2rem;
+            padding: 0.85rem 2.5rem;
             font-size: 1.1rem;
             font-weight: 700;
-            border-radius: 8px;
+            border-radius: 14px;
             cursor: pointer;
-            transition: transform 0.1s, background 0.2s;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            transition: transform 0.1s ease, opacity 0.2s ease;
         }
-        .flip-btn:active {
+        .btn-action:active {
             transform: scale(0.95);
         }
         .back-link {
@@ -79,6 +90,7 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
+            font-weight: 600;
         }
         .back-link:hover {
             color: var(--text-main);
@@ -100,15 +112,16 @@
     <main class="main-container">
         <div class="game-arena">
             <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Back to Hub</a>
-            <div class="score-board">Score: <span id="score">0</span> | Streak: <span id="streak">0</span></div>
             
-            <div class="bottle-stage">
-                <div class="bottle" id="bottle">
-                    <div class="bottle-cap"></div>
-                </div>
+            <div class="stats-bar">
+                Score: <span id="score">0</span> &nbsp;|&nbsp; Streak: <span id="streak">0</span>
             </div>
 
-            <button class="flip-btn cursor-pointer" id="flipBtn">FLIP BOTTLE</button>
+            <div class="bottle-stage">
+                <div class="bottle" id="bottle"></div>
+            </div>
+            
+            <button class="btn-action" id="flipBtn">FLIP BOTTLE</button>
         </div>
     </main>
 
@@ -118,39 +131,35 @@
 
     <script>
         lucide.createIcons();
+        const bottle = document.getElementById('bottle');
+        const flipBtn = document.getElementById('flipBtn');
+        const scoreEl = document.getElementById('score');
+        const streakEl = document.getElementById('streak');
 
         let score = 0;
         let streak = 0;
-        const bottle = document.getElementById('bottle');
-        const scoreEl = document.getElementById('score');
-        const streakEl = document.getElementById('streak');
-        const flipBtn = document.getElementById('flipBtn');
-
-        let isFlipping = false;
 
         flipBtn.addEventListener('click', () => {
-            if (isFlipping) return;
-            isFlipping = true;
-
-            const isSuccess = Math.random() < 0.65;
+            flipBtn.disabled = true;
+            const isSuccess = Math.random() > 0.35; // 65% success chance for engaging gameplay
 
             if (isSuccess) {
-                bottle.style.transform = 'translateY(-160px) rotate(360deg)';
+                bottle.style.transform = 'translateY(-120px) rotate(360deg)';
                 setTimeout(() => {
                     bottle.style.transform = 'translateY(0) rotate(0deg)';
                     score += 10;
                     streak += 1;
                     updateUI();
-                    isFlipping = false;
-                }, 600);
+                    flipBtn.disabled = false;
+                }, 400);
             } else {
-                bottle.style.transform = 'translateY(-120px) rotate(180deg)';
+                bottle.style.transform = 'translateY(-80px) rotate(140deg)';
                 setTimeout(() => {
                     bottle.style.transform = 'translateY(0) rotate(0deg)';
                     streak = 0;
                     updateUI();
-                    isFlipping = false;
-                }, 600);
+                    flipBtn.disabled = false;
+                }, 400);
             }
         });
 

@@ -12,44 +12,65 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
             margin-top: 1rem;
-            min-height: 450px;
+            min-height: 480px;
             position: relative;
-            overflow: hidden;
             text-align: center;
         }
-        .score-board {
-            font-size: 1.25rem;
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
         }
-        .slice-target {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #10b981, #047857);
+        .stats-bar span {
+            color: #a855f7;
+        }
+        .fruit-target {
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle at 30% 30%, #f43f5e, #be123c);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            margin: 1.5rem auto;
+            position: relative;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-            transition: transform 0.1s ease, background 0.3s ease;
-            margin: 2rem auto;
-            user-select: none;
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3);
+            border: 3px dashed rgba(255, 255, 255, 0.4);
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .slice-target:active {
+        .fruit-target:active {
             transform: scale(0.85) rotate(15deg);
         }
-        .instruction {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-top: 1rem;
+        .fruit-inner {
+            font-size: 2.5rem;
+        }
+        .btn-action {
+            background: linear-gradient(135deg, #f43f5e, #a855f7);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
+            transition: transform 0.1s ease, opacity 0.2s ease;
+        }
+        .btn-action:active {
+            transform: scale(0.95);
         }
         .back-link {
             position: absolute;
@@ -61,6 +82,7 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
+            font-weight: 600;
         }
         .back-link:hover {
             color: var(--text-main);
@@ -82,13 +104,16 @@
     <main class="main-container">
         <div class="game-arena">
             <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Back to Hub</a>
-            <div class="score-board">Slices: <span id="score">0</span> | Combo: <span id="combo">0</span></div>
             
-            <div class="slice-target cursor-pointer" id="targetFruit" title="Click to Slice!">
-                🍉
+            <div class="stats-bar">
+                Slices: <span id="slices">0</span> &nbsp;|&nbsp; Combo: <span id="combo">0</span>
+            </div>
+
+            <div class="fruit-target" id="fruitTarget" title="Slice the Watermelon!">
+                <div class="fruit-inner">🍉</div>
             </div>
             
-            <p class="instruction">Tap or swipe the watermelon rapidly to score points!</p>
+            <button class="btn-action" id="sliceBtn">SLICE FRUIT</button>
         </div>
     </main>
 
@@ -98,26 +123,28 @@
 
     <script>
         lucide.createIcons();
-
-        let score = 0;
-        let combo = 0;
-        const targetFruit = document.getElementById('targetFruit');
-        const scoreEl = document.getElementById('score');
+        const fruitTarget = document.getElementById('fruitTarget');
+        const sliceBtn = document.getElementById('sliceBtn');
+        const slicesEl = document.getElementById('slices');
         const comboEl = document.getElementById('combo');
 
-        targetFruit.addEventListener('click', () => {
-            score += 1;
-            combo += 1;
-            
-            // Visual feedback animation effect
-            targetFruit.style.transform = 'scale(1.1) rotate(-10deg)';
-            setTimeout(() => {
-                targetFruit.style.transform = 'scale(1) rotate(0deg)';
-            }, 100);
+        let slices = 0;
+        let combo = 0;
 
-            scoreEl.textContent = score;
+        function performSlice() {
+            slices += 1;
+            combo += 1;
+            slicesEl.textContent = slices;
             comboEl.textContent = combo;
-        });
+
+            fruitTarget.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                fruitTarget.style.transform = 'scale(1) rotate(0deg)';
+            }, 200);
+        }
+
+        fruitTarget.addEventListener('click', performSlice);
+        sliceBtn.addEventListener('click', performSlice);
     </script>
 </body>
 </html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Puzzle - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 1rem;
+            min-height: 480px;
+            position: relative;
+            text-align: center;
+        }
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .stats-bar span {
+            color: #f59e0b;
+        }
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            gap: 10px;
+            margin: 1.5rem auto;
+        }
+        .puzzle-slot {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        .btn-action {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link">← Back to Hub</a>
+            <div class="stats-bar">
+                Level: <span id="level">1</span> &nbsp;|&nbsp; Moves: <span id="moves">0</span>
+            </div>
+            <div class="puzzle-grid">
+                <div class="puzzle-slot" onclick="makeMove()">🚗</div>
+                <div class="puzzle-slot" onclick="makeMove()">🅿️</div>
+                <div class="puzzle-slot" onclick="makeMove()">🚙</div>
+            </div>
+            <button class="btn-action" onclick="resetGame()">RESET PUZZLE</button>
+        </div>
+    </main>
+
+    <script>
+        let moves = 0;
+        function makeMove() {
+            moves++;
+            document.getElementById('moves').textContent = moves;
+        }
+        function resetGame() {
+            moves = 0;
+            document.getElementById('moves').textContent = moves;
+        }
+    </script>
+</body>
+</html>
