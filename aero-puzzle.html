@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aero Puzzle - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1rem;
+            min-height: 450px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .score-board {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        .aero-stage {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 1.5rem auto;
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .aero-stage:active {
+            transform: scale(0.9) rotate(20deg);
+        }
+        .instruction {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <i data-lucide="gamepad-2" class="brand-icon"></i>
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <i data-lucide="user" class="profile-icon"></i>
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Back to Hub</a>
+            <div class="score-board">Altitude: <span id="altitude">1000</span>m | Score: <span id="aeroScore">0</span></div>
+            
+            <div class="aero-stage cursor-pointer" id="aeroBtn" title="Stabilize Flight!">
+                ✈️
+            </div>
+            
+            <p class="instruction">Tap to stabilize the flight path and gain altitude points!</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Play Zone. Managed by Siraj Sar.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        let altitude = 1000;
+        let aeroScore = 0;
+        const aeroBtn = document.getElementById('aeroBtn');
+        const altitudeEl = document.getElementById('altitude');
+        const aeroScoreEl = document.getElementById('aeroScore');
+
+        aeroBtn.addEventListener('click', () => {
+            altitude += 250;
+            aeroScore += 10;
+            altitudeEl.textContent = altitude;
+            aeroScoreEl.textContent = aeroScore;
+            
+            aeroBtn.style.transform = 'translateY(-15px) rotate(-10deg)';
+            setTimeout(() => {
+                aeroBtn.style.transform = 'translateY(0) rotate(0deg)';
+            }, 150);
+        });
+    </script>
+</body>
+</html>
