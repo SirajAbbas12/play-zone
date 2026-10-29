@@ -1,1 +1,163 @@
-<!DOCTYPE html><html><head><title>Bottle Flip Master</title></head><body style="background:#0f172a;color:#fff;text-align:center;padding:50px;"><h1>Bottle Flip Master - Coming Soon</h1><a href="index.html" style="color:#06b6d4;">Back to Hub</a></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottle Flip Master - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1rem;
+            min-height: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        .score-board {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        .bottle-stage {
+            width: 100px;
+            height: 250px;
+            border-bottom: 4px solid var(--accent-color);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .bottle {
+            width: 40px;
+            height: 110px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 10px 10px 6px 6px;
+            position: absolute;
+            bottom: 0;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bottle-cap {
+            width: 20px;
+            height: 15px;
+            background: #f8fafc;
+            border-radius: 4px 4px 0 0;
+        }
+        .flip-btn {
+            background-color: var(--accent-color);
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .flip-btn:active {
+            transform: scale(0.95);
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <i data-lucide="gamepad-2" class="brand-icon"></i>
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <i data-lucide="user" class="profile-icon"></i>
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Back to Hub</a>
+            <div class="score-board">Score: <span id="score">0</span> | Streak: <span id="streak">0</span></div>
+            
+            <div class="bottle-stage">
+                <div class="bottle" id="bottle">
+                    <div class="bottle-cap"></div>
+                </div>
+            </div>
+
+            <button class="flip-btn cursor-pointer" id="flipBtn">FLIP BOTTLE</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Play Zone. Managed by Siraj Sar.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        let score = 0;
+        let streak = 0;
+        const bottle = document.getElementById('bottle');
+        const scoreEl = document.getElementById('score');
+        const streakEl = document.getElementById('streak');
+        const flipBtn = document.getElementById('flipBtn');
+
+        let isFlipping = false;
+
+        flipBtn.addEventListener('click', () => {
+            if (isFlipping) return;
+            isFlipping = true;
+
+            const isSuccess = Math.random() < 0.65;
+
+            if (isSuccess) {
+                bottle.style.transform = 'translateY(-160px) rotate(360deg)';
+                setTimeout(() => {
+                    bottle.style.transform = 'translateY(0) rotate(0deg)';
+                    score += 10;
+                    streak += 1;
+                    updateUI();
+                    isFlipping = false;
+                }, 600);
+            } else {
+                bottle.style.transform = 'translateY(-120px) rotate(180deg)';
+                setTimeout(() => {
+                    bottle.style.transform = 'translateY(0) rotate(0deg)';
+                    streak = 0;
+                    updateUI();
+                    isFlipping = false;
+                }, 600);
+            }
+        });
+
+        function updateUI() {
+            scoreEl.textContent = score;
+            streakEl.textContent = streak;
+        }
+    </script>
+</body>
+</html>
