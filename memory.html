@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 1rem;
+            min-height: 480px;
+            position: relative;
+            text-align: center;
+        }
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        .stats-bar span {
+            color: var(--accent);
+        }
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 70px);
+            gap: 12px;
+            margin: 1.5rem auto;
+        }
+        .memory-card {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .memory-card:hover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .btn-action {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link">← Back to Hub</a>
+            
+            <div class="stats-bar">
+                Matches: <span id="matches">0</span> &nbsp;|&nbsp; Flips: <span id="flips">0</span>
+            </div>
+
+            <div class="memory-grid">
+                <div class="memory-card" onclick="flipCard(this)">🎮</div>
+                <div class="memory-card" onclick="flipCard(this)">⭐</div>
+                <div class="memory-card" onclick="flipCard(this)">🚀</div>
+                <div class="memory-card" onclick="flipCard(this)">🔥</div>
+                <div class="memory-card" onclick="flipCard(this)">⭐</div>
+                <div class="memory-card" onclick="flipCard(this)">🎮</div>
+                <div class="memory-card" onclick="flipCard(this)">🔥</div>
+                <div class="memory-card" onclick="flipCard(this)">🚀</div>
+            </div>
+            
+            <button class="btn-action" onclick="resetMemory()">RESTART GAME</button>
+        </div>
+    </main>
+
+    <script>
+        let flips = 0;
+        let matches = 0;
+        function flipCard(card) {
+            flips++;
+            document.getElementById('flips').textContent = flips;
+            card.style.background = 'rgba(99, 102, 241, 0.2)';
+            card.style.borderColor = 'var(--accent)';
+        }
+        function resetMemory() {
+            flips = 0;
+            matches = 0;
+            document.getElementById('flips').textContent = flips;
+            document.getElementById('matches').textContent = matches;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Match - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 1rem;
+            min-height: 480px;
+            position: relative;
+            text-align: center;
+        }
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .stats-bar span {
+            color: #a855f7;
+        }
+        .color-display {
+            width: 160px;
+            height: 160px;
+            background: #6366f1;
+            border-radius: 20px;
+            margin: 1.5rem auto;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: background 0.3s ease;
+        }
+        .color-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .color-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.1s ease;
+        }
+        .color-btn:active {
+            transform: scale(0.9);
+        }
+        .btn-action {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link">← Back to Hub</a>
+            
+            <div class="stats-bar">
+                Score: <span id="score">0</span> &nbsp;|&nbsp; Streak: <span id="streak">0</span>
+            </div>
+
+            <div class="color-display" id="colorBox"></div>
+
+            <div class="color-options">
+                <button class="color-btn" style="background: #6366f1;" onclick="pickColor('#6366f1')"></button>
+                <button class="color-btn" style="background: #f43f5e;" onclick="pickColor('#f43f5e')"></button>
+                <button class="color-btn" style="background: #10b981;" onclick="pickColor('#10b981')"></button>
+                <button class="color-btn" style="background: #f59e0b;" onclick="pickColor('#f59e0b')"></button>
+            </div>
+            
+            <button class="btn-action" onclick="nextRound()">NEXT ROUND</button>
+        </div>
+    </main>
+
+    <script>
+        let score = 0;
+        let streak = 0;
+        const colors = ['#6366f1', '#f43f5e', '#10b981', '#f59e0b'];
+        let targetColor = colors[0];
+
+        function nextRound() {
+            targetColor = colors[Math.floor(Math.random() * colors.length)];
+            document.getElementById('colorBox').style.background = targetColor;
+        }
+
+        function pickColor(hex) {
+            if (hex === targetColor) {
+                score += 10;
+                streak += 1;
+            } else {
+                streak = 0;
+            }
+            document.getElementById('score').textContent = score;
+            document.getElementById('streak').textContent = streak;
+            nextRound();
+        }
+
+        nextRound();
+    </script>
+</body>
+</html>

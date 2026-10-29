@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aero Stunt - Play Zone</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .game-arena {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 1rem;
+            min-height: 480px;
+            position: relative;
+            text-align: center;
+        }
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            background: rgba(14, 165, 233, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        .stats-bar span {
+            color: #0ea5e9;
+        }
+        .flight-stage {
+            width: 100%;
+            max-width: 320px;
+            height: 180px;
+            background: rgba(14, 165, 233, 0.05);
+            border: 2px dashed rgba(14, 165, 233, 0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 1.5rem auto;
+            overflow: hidden;
+        }
+        .plane {
+            font-size: 3rem;
+            transition: transform 0.3s ease;
+        }
+        .btn-action {
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            color: white;
+            border: none;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <span class="logo-text">Play<span>Zone</span></span>
+        </div>
+        <div class="user-profile">
+            <span class="siraj-tag">Siraj Sar</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="game-arena">
+            <a href="index.html" class="back-link">← Back to Hub</a>
+            
+            <div class="stats-bar">
+                Altitude: <span id="altitude">1000</span>ft &nbsp;|&nbsp; Stunts: <span id="stunts">0</span>
+            </div>
+
+            <div class="flight-stage">
+                <div class="plane" id="plane">✈️</div>
+            </div>
+            
+            <button class="btn-action" onclick="performStunt()">DO BARREL ROLL</button>
+        </div>
+    </main>
+
+    <script>
+        let altitude = 1000;
+        let stunts = 0;
+
+        function performStunt() {
+            stunts++;
+            altitude += 500;
+            document.getElementById('stunts').textContent = stunts;
+            document.getElementById('altitude').textContent = altitude;
+
+            const plane = document.getElementById('plane');
+            plane.style.transform = 'rotate(360deg) scale(1.2)';
+            setTimeout(() => {
+                plane.style.transform = 'rotate(0deg) scale(1)';
+            }, 400);
+        }
+    </script>
+</body>
+</html>
