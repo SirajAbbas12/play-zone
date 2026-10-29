@@ -3,76 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Zone - Ultimate Web Arcade</title>
+    <title>PlayZone - Ultimate 3D Arcade Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #131c2e;
+            --accent-glow: #6366f1;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(99, 102, 241, 0.2);
+        }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 80px;
+            background: rgba(15, 23, 42, 0.95);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 0;
+            gap: 2rem;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+        .sidebar-icon {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .sidebar-icon:hover, .sidebar-icon.active {
+            color: var(--text-main);
+            background: rgba(99, 102, 241, 0.15);
+            transform: scale(1.1);
+        }
+        /* Main Content Area */
+        .main-content {
+            margin-left: 80px;
+            flex: 1;
+            padding: 2rem;
+            max-width: calc(100% - 80px);
+        }
+        /* Top Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: var(--bg-card);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop') center/cover;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner h1 {
+            font-size: 2.2rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .hero-banner p {
+            color: var(--text-muted);
+            margin: 0 0 1.5rem 0;
+            max-width: 500px;
+            font-size: 1rem;
+        }
+        .btn-launch {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-launch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.7);
+        }
+        /* Games Grid Section */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #6366f1;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        .game-thumb {
+            height: 140px;
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+        .game-info {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .game-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        .game-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .play-tag {
+            margin-top: 0.5rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            padding: 6px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; max-width: 100%; padding: 1rem; }
+            .hero-banner { padding: 1.5rem; }
+            .hero-banner h1 { font-size: 1.6rem; }
+        }
+    </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo-container">
-            <i data-lucide="gamepad-2" class="brand-icon"></i>
-            <span class="logo-text">Play<span>Zone</span></span>
-        </div>
-        <div class="user-profile">
-            <i data-lucide="user" class="profile-icon"></i>
-            <span class="siraj-tag">Siraj Sar</span>
-        </div>
-    </header>
 
-    <main class="main-container">
-        <section class="hero-section">
-            <h1>Ultimate Web Arcade Experience</h1>
-            <p>A professional arcade platform featuring high-performance mini-games built for pure entertainment.</p>
-        </section>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-icon active" title="Dashboard">🏠</div>
+        <div class="sidebar-icon" title="Games">🎮</div>
+        <div class="sidebar-icon" title="Leaderboard">🏆</div>
+        <div class="sidebar-icon" title="Settings">⚙️</div>
+    </aside>
 
-        <section class="games-section">
-            <h2>Featured Arcade Games</h2>
-            <div class="games-grid">
-                <div class="game-card">
-                    <h3>Bottle Flip Master</h3>
-                    <p>Flip the bottle and land it perfectly to score points.</p>
-                    <a href="bottle.html" class="btn-play">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <h3>Watermelon Slice</h3>
-                    <p>Fast-paced arcade slicing action to test your speed.</p>
-                    <a href="watermelon.html" class="btn-play">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <h3>Car Out Puzzle</h3>
-                    <p>Brain teaser parking grid puzzle to clear the traffic.</p>
-                    <a href="car-puzzle.html" class="btn-play">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <h3>Memory Match</h3>
-                    <p>Flip and match identical icon cards to win.</p>
-                    <a href="memory-match.html" class="btn-play">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <h3>Color Rush Reflex</h3>
-                    <p>Tap the glowing pulse box as fast as you can.</p>
-                    <a href="color-rush.html" class="btn-play">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <h3>Aero Puzzle</h3>
-                    <p>Stabilize the flight path and gain altitude points.</p>
-                    <a href="aero-puzzle.html" class="btn-play">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <h3>Ludo Multiplayer</h3>
-                    <p>Roll the dice and advance your tokens home.</p>
-                    <a href="ludo.html" class="btn-play">Play Now</a>
-                </div>
+    <!-- Main Container -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">PlayZone ⚡</div>
+            <div class="user-badge">
+                <span>🔥 Siraj Sar</span>
             </div>
-        </section>
-    </main>
+        </header>
 
-    <footer class="footer">
-        <p>&copy; 2026 Play Zone. Managed by Siraj Sar.</p>
-    </footer>
+        <!-- Hero Feature Banner -->
+        <div class="hero-banner">
+            <h1>BOTTLE FLIP MASTER</h1>
+            <p>Experience ultra-smooth physics, touch-powered rotation, and precise landing challenges. Ready for action?</p>
+            <a href="bottle.html" class="btn-launch">PLAY NOW</a>
+        </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+        <!-- Popular Games Catalog -->
+        <div class="section-title">🔥 Popular Arcade Games</div>
+        <div class="games-grid">
+            <!-- Bottle Flip -->
+            <a href="bottle.html" class="game-card">
+                <div class="game-thumb">🍾</div>
+                <div class="game-info">
+                    <div class="game-title">Bottle Flip Master</div>
+                    <div class="game-desc">Test your flip precision & power.</div>
+                    <div class="play-tag">Play Game</div>
+                </div>
+            </a>
+
+            <!-- Watermelon Slice -->
+            <a href="watermelon.html" class="game-card">
+                <div class="game-thumb">🍉</div>
+                <div class="game-info">
+                    <div class="game-title">Watermelon Slice</div>
+                    <div class="game-desc">Fast-paced fruit slicing action.</div>
+                    <div class="play-tag">Play Game</div>
+                </div>
+            </a>
+
+            <!-- Memory Match -->
+            <a href="memory.html" class="game-card">
+                <div class="game-thumb">🧠</div>
+                <div class="game-info">
+                    <div class="game-title">Cyber Memory Match</div>
+                    <div class="game-desc">3D glowing card flip challenge.</div>
+                    <div class="play-tag">Play Game</div>
+                </div>
+            </a>
+
+            <!-- Car Puzzle -->
+            <a href="#" class="game-card">
+                <div class="game-thumb">🏎️</div>
+                <div class="game-info">
+                    <div class="game-title">Car Out Puzzle</div>
+                    <div class="game-desc">Grid parking escape logic.</div>
+                    <div class="play-tag">Coming Soon</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
 </body>
 </html>
